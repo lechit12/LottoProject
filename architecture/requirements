@@ -1,0 +1,16 @@
+ jako klient chcę zagrać w Lotto, podać liczby i sprawdzić, czy wygrałem danego dnia
+    klient podaje 6 liczb
+    liczby muszą być w zakresie od 1-99
+    liczby nie mogą się powtarzać
+    klient dostaje informacje o dacie losowanie
+    klient dostaje informacje o swoim unikalnym identyfikatorze losowanie
+    klient może sprawdzić, czy wygrał (dostaje informacje ile trafił liczb)
+    wygrane liczby powinny być pobrane ze zdalnego serwera HTTP
+    losowania są co soboty o 12:00
+
+
+Moduły
+przyjęcie (walidacja) liczb od użytkownika - (NumberReceiver)
+losowanie liczb na dany dzień              - (NumberGenerator)
+sprawdzenie wygranych liczb w danym dniu   - (ResultChecker)
+poinformowania użytkownika o rezultacie    - (ResultAnnouncer)

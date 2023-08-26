@@ -1,4 +1,10 @@
 package org.lotto.domain.numbergenerator;
 
- class NumberGeneratorFacade {
+
+
+public class NumberGeneratorFacade {
+
+
+
+
 }
