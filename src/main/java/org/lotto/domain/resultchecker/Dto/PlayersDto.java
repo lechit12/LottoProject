@@ -1,4 +1,9 @@
 package org.lotto.domain.resultchecker.Dto;
 
-public record PlayersDto() {
+import lombok.Builder;
+
+import java.util.List;
+
+@Builder
+public record PlayersDto(List<ResultDto> results, String message) {
 }

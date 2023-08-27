@@ -17,6 +17,7 @@ public class NumberReceiverFacade {
     private final NumberValidator validator;
     private final NumberReceiverRepository repository;
     private final Clock clock;
+    private final DrawDateGenerator drawDateGenerator;
 
     public InputNumberResultDto inputNumbers(Set<Integer> numbersFromUser) {
 
@@ -44,6 +45,10 @@ public class NumberReceiverFacade {
                 .stream()
                 .map(TicketMapper::mapFromTicket)
                 .toList();
+    }
+
+    public LocalDateTime retriveNextDrawDate() {
+        return drawDateGenerator.getNextDrawDate();
     }
 }
 
