@@ -18,7 +18,7 @@ public class WinningNumbersGeneratorFacade {
 
     public WinningNumbersDto generateWinningNumbers()
     {
-        LocalDateTime nextDrawDate = numberReceieverFacade.retriveNextDrawDate();
+        LocalDateTime nextDrawDate = numberReceieverFacade.retrieveNextDrawDate();
         Set<Integer> winningNumbers = winningNumberGenerator.generateSixRandomNumbers();
         winningNumberValidator.validate(winningNumbers);
         winningNumbersRepository.save(WinningNumbers.builder()
@@ -39,7 +39,7 @@ public class WinningNumbersGeneratorFacade {
 
     public boolean areWinningNumbersGeneratedByDate()
     {
-        LocalDateTime nextDrawDate = numberReceieverFacade.retriveNextDrawDate();
+        LocalDateTime nextDrawDate = numberReceieverFacade.retrieveNextDrawDate();
         return winningNumbersRepository.existsByDate(nextDrawDate);
     }
 
