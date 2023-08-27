@@ -1,20 +1,16 @@
 package org.lotto.domain.numberreceiver;
 
 import lombok.AllArgsConstructor;
-import org.lotto.domain.numberreceiver.dto.InputNumberResultDto;
-import org.lotto.domain.numberreceiver.dto.NumberReceiverResponseDto;
+import org.lotto.domain.numberreceiver.dto.NumberReceieverResponseDto;
 import org.lotto.domain.numberreceiver.dto.TicketDto;
 
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.lotto.domain.numberreceiver.ValidationResult.INPUT_SUCCESS;
-import static org.lotto.domain.numberreceiver.dto.InputNumberResultDto.*;
 
 @AllArgsConstructor
 public class NumberReceieverFacade {
@@ -24,11 +20,11 @@ public class NumberReceieverFacade {
     private final TicketRepository ticketRepository;
 
 
-    public NumberReceiverResponseDto inputNumbers(Set<Integer> numbersFromUser) {
+    public NumberReceieverResponseDto inputNumbers(Set<Integer> numbersFromUser) {
         List<ValidationResult> validationResultList = numberValidator.validate(numbersFromUser);
         if (!validationResultList.isEmpty()) {
             String resultMessage = numberValidator.createResultMessage();
-            return new NumberReceiverResponseDto(null, resultMessage);
+            return new NumberReceieverResponseDto(null, resultMessage);
         }
         LocalDateTime drawDate = drawDateGenerator.getNextDrawDate();
 
@@ -48,7 +44,7 @@ public class NumberReceieverFacade {
 
         ticketRepository.save(savedTicket);
 
-        return new NumberReceiverResponseDto(generatedTicket, INPUT_SUCCESS.info);
+        return new NumberReceieverResponseDto(generatedTicket, INPUT_SUCCESS.info);
     }
 
     public List<TicketDto> retrieveAllTicketsByNextDrawDate() {

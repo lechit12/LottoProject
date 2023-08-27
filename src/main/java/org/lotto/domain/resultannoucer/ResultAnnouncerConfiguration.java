@@ -6,8 +6,8 @@ import java.time.Clock;
 
 public class ResultAnnouncerConfiguration {
 
-    ResultAnnoucerFacade createForTest(ResultCheckerFacade resultCheckerFacade, ResponseRepository responseRepository, Clock clock)
+    ResultAnnouncerFacade createForTest(ResultCheckerFacade resultCheckerFacade, ResponseRepository responseRepository, Clock clock)
     {
-        return new ResultAnnoucerFacade(resultCheckerFacade,responseRepository,clock);
+        return new ResultAnnouncerFacade(resultCheckerFacade,responseRepository,clock);
     }
 }
