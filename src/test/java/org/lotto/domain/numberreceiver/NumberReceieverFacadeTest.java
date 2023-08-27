@@ -12,12 +12,12 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NumberReceiverFacadeTest {
+class NumberReceieverFacadeTest {
     AdjustableClock clock = new AdjustableClock(LocalDateTime.of(2023, 2, 15, 12, 0, 0).toInstant(ZoneOffset.UTC), ZoneId.systemDefault());
 
-    NumberReceiverFacade numberReceiverFacade = new NumberReceiverFacade(
+    NumberReceieverFacade numberReceieverFacade = new NumberReceieverFacade(
             new NumberValidator(),
-            new InMemoryNumberReceiverRepositoryTestImpl(),
+            new InMemoryNumberReceieverRepositoryTestImpl(),
             clock
     );
 
@@ -26,7 +26,7 @@ class NumberReceiverFacadeTest {
         //given
         Set<Integer> numbersFromUser = Set.of(1, 2, 3, 4, 5, 6);
         //when
-        InputNumberResultDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
+        InputNumberResultDto result = numberReceieverFacade.inputNumbers(numbersFromUser);
         //then
         assertThat(result.message()).isEqualTo("success");
     }
@@ -36,7 +36,7 @@ class NumberReceiverFacadeTest {
         //given
         Set<Integer> numbersFromUser = Set.of(1, 2, 3, 4, 5);
         //when
-        InputNumberResultDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
+        InputNumberResultDto result = numberReceieverFacade.inputNumbers(numbersFromUser);
         //then
         assertThat(result.message()).isEqualTo("failed");
     }
@@ -46,7 +46,7 @@ class NumberReceiverFacadeTest {
         //given
         Set<Integer> numbersFromUser = Set.of(1, 2, 3, 4, 5, 6, 7);
         //when
-        InputNumberResultDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
+        InputNumberResultDto result = numberReceieverFacade.inputNumbers(numbersFromUser);
         //then
         assertThat(result.message()).isEqualTo("failed");
     }
@@ -56,7 +56,7 @@ class NumberReceiverFacadeTest {
         //given
         Set<Integer> numbersFromUser = Set.of(1, 2000, 3, 4, 5, 6);
         //when
-        InputNumberResultDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
+        InputNumberResultDto result = numberReceieverFacade.inputNumbers(numbersFromUser);
         //then
         assertThat(result.message()).isEqualTo("failed");
     }
@@ -65,11 +65,11 @@ class NumberReceiverFacadeTest {
     public void should_return_save_to_database_when_user_gave_six_numbers() {
         //given
         Set<Integer> numbersFromUser = Set.of(1, 2, 3, 4, 5, 6);
-        InputNumberResultDto result = numberReceiverFacade.inputNumbers(numbersFromUser);
+        InputNumberResultDto result = numberReceieverFacade.inputNumbers(numbersFromUser);
         LocalDateTime drawDate = LocalDateTime.of(2023, 2, 15, 13, 0, 0);
         //when
 
-        List<TicketDto> ticketDtos = numberReceiverFacade.userNumbers(drawDate);
+        List<TicketDto> ticketDtos = numberReceieverFacade.userNumbers(drawDate);
         //then
 
         assertThat(ticketDtos).contains(

@@ -3,7 +3,7 @@ package org.lotto.domain.numbergenerator;
 
 import lombok.AllArgsConstructor;
 import org.lotto.domain.numbergenerator.dto.WinningNumbersDto;
-import org.lotto.domain.numberreceiver.NumberReceiverFacade;
+import org.lotto.domain.numberreceiver.NumberReceieverFacade;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,11 +14,11 @@ public class WinningNumbersGeneratorFacade {
     private final RandomNumberGenerable winningNumberGenerator;
     private final WinningNumberValidator winningNumberValidator;
     private final WinningNumbersRepository winningNumbersRepository;
-    private final NumberReceiverFacade numberReceiverFacade;
+    private final NumberReceieverFacade numberReceieverFacade;
 
     public WinningNumbersDto generateWinningNumbers()
     {
-        LocalDateTime nextDrawDate = numberReceiverFacade.retriveNextDrawDate();
+        LocalDateTime nextDrawDate = numberReceieverFacade.retriveNextDrawDate();
         Set<Integer> winningNumbers = winningNumberGenerator.generateSixRandomNumbers();
         winningNumberValidator.validate(winningNumbers);
         winningNumbersRepository.save(WinningNumbers.builder()
@@ -39,7 +39,7 @@ public class WinningNumbersGeneratorFacade {
 
     public boolean areWinningNumbersGeneratedByDate()
     {
-        LocalDateTime nextDrawDate = numberReceiverFacade.retriveNextDrawDate();
+        LocalDateTime nextDrawDate = numberReceieverFacade.retriveNextDrawDate();
         return winningNumbersRepository.existsByDate(nextDrawDate);
     }
 

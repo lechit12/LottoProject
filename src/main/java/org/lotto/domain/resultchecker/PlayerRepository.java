@@ -1,4 +1,11 @@
 package org.lotto.domain.resultchecker;
 
-public class PlayerRepository {
+import java.util.List;
+import java.util.Optional;
+
+public interface PlayerRepository {
+
+    List<Player> saveAll(List<Player> players);
+
+    Optional<Player> findById(String hash);
 }
