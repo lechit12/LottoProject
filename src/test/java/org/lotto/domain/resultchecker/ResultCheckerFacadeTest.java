@@ -113,5 +113,35 @@ class ResultCheckerFacadeTest {
         assertThat(resultDto).isEqualTo(expectedResult);
 
     }
+    @Test
+    public void it_should_generate_fail_message_when_winningNumbers_equal_null() {
+        //given
+        when(winningNumbersGeneratorFacade.generateWinningNumbers()).thenReturn(WinningNumbersDto.builder()
+                .winningNumbers(null)
+                .build());
+        ResultCheckerFacade resultCheckerFacade = new ResultCheckerConfiguration().createForTest(winningNumbersGeneratorFacade, numberReceieverFacade, playerRepository);
+        //when
+        PlayersDto playersDto = resultCheckerFacade.generateWinners();
+        //then
+        String message = playersDto.message();
+        assertThat(message).isEqualTo("Winners failed to retrieve");
+
+    }
+
+    @Test
+    public void it_should_generate_fail_message_when_winningNumbers_is_empty() {
+        //given
+        when(winningNumbersGeneratorFacade.generateWinningNumbers()).thenReturn(WinningNumbersDto.builder()
+                .winningNumbers(Set.of())
+                .build());
+        ResultCheckerFacade resultCheckerFacade = new ResultCheckerConfiguration().createForTest(winningNumbersGeneratorFacade, numberReceieverFacade, playerRepository);
+        //when
+        PlayersDto playersDto = resultCheckerFacade.generateWinners();
+        //then
+        String message = playersDto.message();
+        assertThat(message).isEqualTo("Winners failed to retrieve");
+
+    }
+
 
 }

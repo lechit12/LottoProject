@@ -33,8 +33,11 @@ public class WinningNumbersGeneratorFacade {
     public WinningNumbersDto retrieveWinningNumberByDate(LocalDateTime date)
     {
         WinningNumbers numbersByDate = winningNumbersRepository.findNumbersByDate(date)
-                .orElseThrow(()-> new RuntimeException("Not Found"));
-        return WinningNumbersDto.builder().build();
+                .orElseThrow(()-> new WinningNumbersNotFoundException("Not Found"));
+        return WinningNumbersDto.builder()
+                .winningNumbers(numbersByDate.winningNumbers())
+                .date(numbersByDate.date())
+                .build();
     }
 
     public boolean areWinningNumbersGeneratedByDate()
