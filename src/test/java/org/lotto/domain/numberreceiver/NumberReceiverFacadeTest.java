@@ -14,6 +14,10 @@ import org.lotto.domain.numberreceiver.dto.TicketDto;
 import pl.lotto.domain.AdjustableClock;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class NumberReceiverFacadeTest {
 
     private final TicketRepository ticketRepository = new TicketRepositoryTestImpl();
@@ -239,5 +243,53 @@ public class NumberReceiverFacadeTest {
         LocalDateTime expectedDrawDate = LocalDateTime.of(2022, 11, 19, 12, 0, 0);
         assertThat(testedDrawDate).isEqualTo(expectedDrawDate);
     }
+    @Test
+    public void it_should_return_Ticket_by_Hash(){
+        //given
+        TicketRepository ticketRepository = mock(TicketRepositoryTestImpl.class);
+        HashGenerable hashGenerator = new HashGenerator();
 
+        NumberReceieverFacade numberReceieverFacade = new NumberReceieverConfiguration().createForTest(hashGenerator, clock, ticketRepository);
+        String mockHash = "mockHash";
+        LocalDateTime mockDrawDate = LocalDateTime.of(2023, 1, 1, 0, 0); // przykładowa data
+        Set<Integer> mockNumbers = Set.of(1, 2, 3,4,5,6);
+        Ticket mockTicket = new Ticket("mockHash",mockDrawDate,mockNumbers);
+
+
+        // Konfiguracja zachowania mocka
+        when(ticketRepository.findByHash(mockHash)).thenReturn(mockTicket);
+
+        // Wywołanie testowanej metody
+        TicketDto result = numberReceieverFacade.findByHash(mockHash);
+
+        // Sprawdzenie rezultatów
+        assertEquals(mockHash, result.hash());
+        assertEquals(mockNumbers, result.numbers());
+        //assertEquals("mockDrawDate", result.);
+
+    }
+    @Test
+    public void it_should_return_ticket_by_Hash(){
+        //given
+        TicketRepository ticketRepository = mock(TicketRepositoryTestImpl.class);
+
+
+        String mockHash = "mockHash";
+        LocalDateTime mockDrawDate = LocalDateTime.of(2023, 1, 1, 0, 0); // przykładowa data
+        Set<Integer> mockNumbers = Set.of(1, 2, 3,4,5,6);
+        Ticket mockTicket = new Ticket("mockHash",mockDrawDate,mockNumbers);
+
+
+        // Konfiguracja zachowania mocka
+        when(ticketRepository.findByHash(mockHash)).thenReturn(mockTicket);
+
+        // Wywołanie testowanej metody
+        TicketDto result = TicketMapper.mapFromTicket(mockTicket);
+
+        // Sprawdzenie rezultatów
+        assertEquals(mockHash, result.hash());
+        assertEquals(mockNumbers, result.numbers());
+        //assertEquals("mockDrawDate", result.);
+
+    }
 }
